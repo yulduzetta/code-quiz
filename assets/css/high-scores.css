@@ -1,0 +1,33 @@
+/* High Scores Page specific styling */
+/* Shared styling can be found in style.css/*/
+
+.hs-section-wrapper {
+  align-items: stretch;
+}
+
+.scores-entries-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.score-entry {
+  resize: none;
+  padding: 5px;
+  margin: 5pt;
+  background-color: rgb(208, 222, 226);
+  font-size: medium;
+  height: 35px;
+  width: 51%;
+  border-radius: 20pt;
+  border: none;
+  padding: 5pt 20pt;
+}
+
+.hs-section-wrapper a {
+  text-decoration: none;
+  color: var(--white);
+}
+
+.hide {
+  display: none;
+}
