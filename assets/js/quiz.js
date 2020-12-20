@@ -3,41 +3,46 @@ var score = 0;
 var quiz = [
   {
     question: "Commonly used data types DO Not Include:",
-    answer1: "1. strings",
-    answer2: "2. booleans",
-    answer3: "3. alerts",
-    answer4: "4. numbers",
+    answer1: "strings",
+    answer2: "booleans",
+    answer3: "alerts",
+    answer4: "numbers",
+    correctAnswer: "alerts",
   },
   {
     question:
       "The condition in an if / else statement is enclosed with _______.",
-    answer1: "1. quotes",
-    answer2: "2. curly brackets",
-    answer3: "3. parenthesis",
-    answer4: "4. square brackets",
+    answer1: "quotes",
+    answer2: "curly brackets",
+    answer3: "parenthesis",
+    answer4: "square brackets",
+    correctAnswer: "parenthesis",
   },
   {
     question: "Arrays in JavaScript can be used to store _______",
-    answer1: "1. numbers and strings",
-    answer2: "2. other arrays",
-    answer3: "3. booleans",
-    answer4: "4. all of the above",
+    answer1: "numbers and strings",
+    answer2: "other arrays",
+    answer3: "booleans",
+    answer4: "all of the above",
+    correctAnswer: "all of the above",
   },
   {
     question:
       "String values must be enclosed within _______ when being assigned to variables",
-    answer1: "1. commas",
-    answer2: "2. curly brackets",
-    answer3: "3. quotes",
-    answer4: "4. paranthesis",
+    answer1: "commas",
+    answer2: "curly brackets",
+    answer3: "quotes",
+    answer4: "paranthesis",
+    correctAnswer: "quotes",
   },
   {
     question:
       "A very useful tool used during development and debugging for printing content to the debugger is:",
-    answer1: "1. JavaScript",
-    answer2: "2. terminal/bash",
-    answer3: "3. for loops",
-    answer4: "4. consol.log",
+    answer1: "JavaScript",
+    answer2: "terminal/bash",
+    answer3: "for loops",
+    answer4: "console.log",
+    correctAnswer: "console.log",
   },
 ];
 
@@ -68,9 +73,29 @@ var startQuizHandler = function () {
 
   //displays first question
   displayQuestion();
+
+  // TODO
+  // start the count down
+  countDown();
 };
 
-var answerHandler = function () {
+var quizHandler = function (event) {
+  // quiz.shift();
+  var targetEl = event.target;
+  if (targetEl.innerText === quiz[0].correctAnswer) {
+    //TODO: css style
+    alert("Correct");
+  } else if (targetEl.innerText != quiz[0].correctAnswer) {
+    //TODO: css style
+    alert("Wrong");
+    // remove the points
+    score = score - 15;
+    // set element value
+    scoreEl.textContent = score;
+  }
+  // removes answered question from the array of question objects
+  quiz.shift();
+
   if (quiz.length > 0) {
     displayQuestion();
   } else if (quiz.length === 0 || score === 0) {
@@ -121,12 +146,12 @@ function displayQuestion() {
       pageTitleEl.textContent = quiz[0].question;
 
       // displays answers
+      //TODO: prepend w/ auto-generated id
       answerEl.textContent = quiz[0][key];
     }
     idCounter++;
   }
   // removes first object from quiz array
-  quiz.shift();
   return;
 }
 
@@ -188,7 +213,7 @@ function saveScoreInLocalStorage() {
     localStorage.setItem("highScores", JSON.stringify(scoresArray));
     return;
 
-    // if new user, then create and push the new object to the array
+    // if new user, then create and push the score object to the array
   } else {
     var highScore = {
       initials: initials,
@@ -201,5 +226,5 @@ function saveScoreInLocalStorage() {
 /********************** EVENT LISTENERS **********************/
 
 buttonEl.addEventListener("click", startQuizHandler);
-buttonsWrapperEl.addEventListener("click", answerHandler);
+buttonsWrapperEl.addEventListener("click", quizHandler);
 submitFormBtnEl.addEventListener("click", submitScoreFormHandler);
