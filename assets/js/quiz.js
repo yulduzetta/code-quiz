@@ -1,5 +1,6 @@
 /********************** GLOBAL VARIABLES**********************/
 var score = 0;
+var correctAnswers = 0;
 var quiz = [
   {
     question: "Commonly used data types DO Not Include:",
@@ -77,7 +78,7 @@ var startQuizHandler = function () {
   displayQuestion();
 };
 
-// validates anwer
+// handles quiz and checks the answers
 var quizHandler = function (event) {
   // debugger;
   document.querySelector(".answer-wrapper").classList.remove("hide");
@@ -90,6 +91,7 @@ var quizHandler = function (event) {
   if (answer === quiz[0].correctAnswer) {
     answerMsgEl.setAttribute("style", "color: green");
     answerMsgEl.textContent = "Correct!";
+    correctAnswers++;
     clearAnswerValidationMsg();
   } else if (answer != quiz[0].correctAnswer) {
     answerMsgEl.setAttribute("style", "color: red");
@@ -120,14 +122,15 @@ var submitScoreFormHandler = function () {
 function countDown() {
   // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
   var timeInterval = setInterval(function () {
-    // As long as the `score` is greater than 1
-    if (score >= 1) {
+    // As long as the `score` is greater than 1 and there are no more questions left
+    // keep counting down
+    if (score >= 1 && quiz.length > 1) {
       // Set the `textContent` of `timerEl` to show the remaining seconds
       timerEl.textContent = score;
       // Decrement `score` by 1
       score--;
+      console.error(quiz.length);
     } else {
-      // Use `clearInterval()` to stop the timer
       clearInterval(timeInterval);
       displayDonePage();
     }
@@ -179,16 +182,20 @@ function clearAnswerValidationMsg() {
 function displayDonePage() {
   pageTitleEl.textContent = "All done!";
   buttonsWrapperEl.remove();
-  document.querySelector(".timer-wrapper").classList.add('hide');
+  document.querySelector(".timer-wrapper").classList.add("hide");
 
   // unhides initials form in DOM
-  var initialsFormWrapperEl = document.querySelector(
-    ".initials-form-wrapper.hide"
-  );
+  var initialsFormWrapperEl = document.querySelector(".initials-form-wrapper");
   initialsFormWrapperEl.classList.remove("hide");
 
   var finalScoreEl = document.querySelector(".initials-form-wrapper p");
-  finalScoreEl.textContent = `Your final score is ${score}.`;
+
+  if (correctAnswers === 0 || score <= 0) {
+    score = 0;
+    finalScoreEl.textContent = `None of your answers are correct, and your final score is: ${score}.`;
+    return;
+  } else finalScoreEl.textContent = `Your final score is ${score}. Good Job!`;
+  return;
 }
 
 // saves initials and score in localStorage, then redirects to the 'High Scores' page.
