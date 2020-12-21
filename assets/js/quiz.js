@@ -179,6 +179,7 @@ function clearAnswerValidationMsg() {
 function displayDonePage() {
   pageTitleEl.textContent = "All done!";
   buttonsWrapperEl.remove();
+  document.querySelector(".timer-wrapper").classList.add('hide');
 
   // unhides initials form in DOM
   var initialsFormWrapperEl = document.querySelector(
