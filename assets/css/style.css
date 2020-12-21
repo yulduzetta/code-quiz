@@ -50,7 +50,6 @@ a {
 .btn-wrapper {
   display: grid;
 }
-
 .btn {
   outline: none;
   display: inline-block;
@@ -70,6 +69,12 @@ a {
 
 .left-aligned {
   text-align: left;
+}
+
+p.answer-msg {
+  text-decoration: overline;
+  font-style: italic;
+  color: gray;
 }
 
 .initials-form-wrapper {

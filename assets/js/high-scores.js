@@ -16,6 +16,7 @@ function displayHighScores() {
   var allScores = JSON.parse(localStorage.getItem("highScores")) || [];
 
   if (allScores.length != 0) {
+      var rank = 1;
     // sorts array of objects by highest score
     var sortedByHighest = allScores.sort((a, b) => b.score - a.score);
     // for each score in the all scores array of scores, creates a DOM entry and displays it.
@@ -23,7 +24,7 @@ function displayHighScores() {
       var scoreEntryEl = document.createElement("textarea");
       scoreEntryEl.readOnly = true;
       scoreEntryEl.setAttribute("class", "score-entry");
-      scoreEntryEl.value = `${sortedByHighest[i].initials}: ${sortedByHighest[i].score}`;
+      scoreEntryEl.value = `${rank}. ${sortedByHighest[i].initials}: ${sortedByHighest[i].score}`;
       scoresEntriesEl.appendChild(scoreEntryEl);
       if (i == 0) {
         // highlights highest score
@@ -31,8 +32,9 @@ function displayHighScores() {
           "style",
           "background-color: cyan; text-align:center; color: red; font-size: 16pt"
         );
-        scoreEntryEl.value = `🏅${sortedByHighest[i].initials}: ${sortedByHighest[i].score}🏅`;
+        scoreEntryEl.value = `${rank}. 🏅${sortedByHighest[i].initials}: ${sortedByHighest[i].score}🏅`;
       }
+      rank++;
     }
   } else {
     handleNoScoresStyling();
