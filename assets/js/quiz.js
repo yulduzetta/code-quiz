@@ -124,7 +124,7 @@ function countDown() {
   var timeInterval = setInterval(function () {
     // As long as the `score` is greater than 1 and there are no more questions left
     // keep counting down
-    if (score >= 1 && quiz.length > 1) {
+    if (score >= 1 && quiz.length >=1) {
       // Set the `textContent` of `timerEl` to show the remaining seconds
       timerEl.textContent = score;
       // Decrement `score` by 1
